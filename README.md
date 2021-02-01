@@ -26,6 +26,16 @@ export AWS_SECRET_ACCESS_KEY="BBBBBBBBBBBBBBBBBB"
 export AWS_SESSION_TOKEN="CCCCCCCCCCCCCCCCCCCCCCCC"
 ```
 
+As an alternative for people using [`fish`](https://fishshell.com/), [`cmd`](https://en.wikipedia.org/wiki/Cmd.exe) or [`PowerShell`](https://en.wikipedia.org/wiki/PowerShell) (defaults to `bash`), it is possible to set which output is preferred. As example for `PowerShell`:
+
+```powershell
+PS> aws sts assume-role --role-arn ${ROLE_ARN} --role-session-name ${SESSION_NAME} --external-id ${EXTERNAL_ID} | atg -powershell
+
+$Env:AWS_ACCESS_KEY_ID="AAAAAAAAAAAAAAA"
+$Env:AWS_SECRET_ACCESS_KEY="BBBBBBBBBBBBBBBBBB"
+$Env:AWS_SESSION_TOKEN="CCCCCCCCCCCCCCCCCCCCCCCC"
+```
+
 Read from `stdin` and import 
 
 ```sh
@@ -45,18 +55,18 @@ $> aws sts get-caller-identity
 }
 ```
 
-Read from `role.json` file:
+Read from `role.json` file for `fish`:
 
 ```sh
-$> aws sts get-caller-identity
+~> aws sts get-caller-identity
 {
     "UserId": "AIDA11111111111111111",
     "Account": "111111111111",
     "Arn": "arn:aws:iam::111111111111:user/myuser"
 }
 
-$> eval $(atg -json role.json)
-$> aws sts get-caller-identity
+~> eval $(atg -json role.json -fish)
+~> aws sts get-caller-identity
 {
     "UserId": "AROA22222222222222222:${SESSION_NAME}",
     "Account": "222222222222",
