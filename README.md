@@ -73,3 +73,15 @@ Read from `role.json` file for `fish`:
     "Arn": "arn:aws:sts::222222222222:assumed-role/role-name/${SESSION_NAME}"
 }
 ```
+
+## Using MFA
+
+If an MFA device is [required to authenticate](https://aws.amazon.com/premiumsupport/knowledge-center/authenticate-mfa-cli/), follow these instructions:
+
+```sh
+# Account with MFA configured
+$ eval $(aws --profile mfa sts get-session-token --serial-number arn:aws:iam::111111111111:mfa/userMFA --token-code 123123 | atg)
+
+# Assume the role from the MFA account to a different account
+$ eval $(aws sts assume-role --role-arn arn:aws:iam::222222222222:role/role-to-assume --role-session-name assume-with-mfa | atg)
+```
