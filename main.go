@@ -48,7 +48,7 @@ func main() {
 	if Count(boolElements) > 1 {
 		fmt.Println("Choose one [bash, cmd, fish, powershell]")
 		fmt.Println("Use atg -h")
-		//flag.PrintDefaults()
+		//flag.PrintDefaults( )
 		os.Exit(0)
 	}
 
