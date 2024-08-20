@@ -22,7 +22,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/gocaio/atg/modules/parser"
+	"github.com/joanbono/atg/modules/parser"
 )
 
 var (

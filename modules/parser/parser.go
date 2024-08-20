@@ -27,7 +27,7 @@ import (
 	"os"
 
 	"github.com/andrew-d/go-termutil"
-	"github.com/gocaio/atg/modules/structs"
+	"github.com/joanbono/atg/modules/structs"
 )
 
 // CheckStdin will check if there is
