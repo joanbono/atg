@@ -21,15 +21,15 @@ zip = cd build && zip $(APPNAME)_$(VERSION)_$(1)_$(2).zip $(BINARY)_$(VERSION)_$
 all: release
 
 .PHONY: release
-release: darwin linux windows
+release: darwin linux windows android
 
 .PHONY: install
 install: 
-	go build -o $(BINARY)
+	go build ${LDFLAGS} -o $(BINARY)
 	mv $(BINARY) $(GOPATH)/bin
-
+	
 .PHONY: dev
-dev: darwin-dev linux-dev windows-dev
+dev: darwin-dev linux-dev windows-dev android-dev
 
 .PHONY: clean
 clean:
@@ -37,10 +37,10 @@ clean:
 
 ##### LINUX BUILDS #####
 .PHONY: linux
-linux: linux_386.tar.gz linux_amd64.tar.gz
+linux: linux_386.tar.gz linux_amd64.tar.gz linux_arm.tar.gz linux_arm64.tar.gz 
 
 .PHONY: linux-dev
-linux-dev: linux_386 linux_amd64
+linux-dev: linux_386 linux_amd64 linux_arm linux_arm64
 
 .PHONY: linux_386
 linux_386: $(sources)
@@ -49,6 +49,22 @@ linux_386: $(sources)
 .PHONY: linux_386.tar.gz
 linux_386.tar.gz: linux_386
 	$(call tar,linux,386)
+
+.PHONY: linux_arm
+linux_arm: $(sources)
+	$(call cmd,linux,arm,)
+
+.PHONY: linux_arm.tar.gz
+linux_arm.tar.gz: linux_arm
+	$(call tar,linux,arm)
+
+.PHONY: linux_arm64
+linux_arm64: $(sources)
+	$(call cmd,linux,arm64,)
+
+.PHONY: linux_arm64.tar.gz
+linux_arm64.tar.gz: linux_arm64
+	$(call tar,linux,arm64)
 
 .PHONY: linux_amd64
 linux_amd64: $(sources)
@@ -61,10 +77,10 @@ linux_amd64.tar.gz: linux_amd64
 
 ##### DARWIN (MAC) BUILDS #####
 .PHONY: darwin
-darwin: darwin_amd64.tar.gz
+darwin: darwin_amd64.tar.gz darwin_arm64.tar.gz
 
 .PHONY: darwin-dev
-darwin-dev: darwin_amd64
+darwin-dev: darwin_amd64 darwin_amd64
 
 .PHONY: darwin_amd64
 darwin_amd64: $(sources)
@@ -73,6 +89,14 @@ darwin_amd64: $(sources)
 .PHONY: darwin_amd64.tar.gz
 darwin_amd64.tar.gz: darwin_amd64
 	$(call tar,darwin,amd64)
+
+.PHONY: darwin_arm64
+darwin_arm64: $(sources)
+	$(call cmd,darwin,arm64,)
+
+.PHONY: darwin_arm64.tar.gz
+darwin_arm64.tar.gz: darwin_arm64
+	$(call tar,darwin,arm64)
 
 ##### WINDOWS BUILDS #####
 .PHONY: windows
