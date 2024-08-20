@@ -21,7 +21,7 @@ zip = cd build && zip $(APPNAME)_$(VERSION)_$(1)_$(2).zip $(BINARY)_$(VERSION)_$
 all: release
 
 .PHONY: release
-release: darwin linux windows android
+release: darwin linux windows
 
 .PHONY: install
 install: 
@@ -29,7 +29,7 @@ install:
 	mv $(BINARY) $(GOPATH)/bin
 	
 .PHONY: dev
-dev: darwin-dev linux-dev windows-dev android-dev
+dev: darwin-dev linux-dev windows-dev
 
 .PHONY: clean
 clean:
